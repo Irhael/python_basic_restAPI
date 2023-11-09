@@ -9,6 +9,9 @@ if __name__ == "__main__": # verify if the file is being executed directly. that
 
 # http://127.0.0.1:5000/ -> After run the program. This is my local default url to access the server and the flask application.
 
-class SuperClass(Resource): # this class is used to create a resource. It will work like a route with methods that can be overrided.
+class Route(Resource): # this class is used to create a resource. It will work like a route with methods that can be overrided.
     def get(self):
-        return {"data": "Hello World"}
+        return {"data": "This is a get method"}
+    
+
+api.add_resource(Route, "/route") # This line is used to add the resource created below to the api. The first parameter is the resource class and the second is the route, that will be used to access the resource.
