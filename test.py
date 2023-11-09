@@ -6,7 +6,7 @@ response = requests.get(BASE + "route") # This line is used to send a get reques
 
 print(response.json()) # This line is used to print the object returned by the server and the flask application. The response.json() is used to convert the object to a json object.
 
-#The responses of the api has to be in JSON format, that is basically a python dictionary, in order to avoide errors.
+#The responses of the api has to be in JSON format, that is basically a python dictionary, in order to avoide erros.
 
 # Response in the test.py terminal: {'data': 'This is a get method'}. 
 #Response in the main.py terminal:  GET /route HTTP/1.1" 200 - -> This is the response in the server and the flask application. The 200 means that the request was successful. 
