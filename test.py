@@ -15,17 +15,18 @@ for i in range (len(data)):
 
 input()
 
-response = requests.delete(BASE + "video/0")
-print(response)
-
+for i in range (len(data)):
+    response = requests.get(BASE + "video/" + str(i), data[i]) #http://http://127.0.0.1:5000/video/video_id/data[i]
+    print(response.json())
+ 
 input()
 
-response = requests.get(BASE + "video/2")
-print(response.json()) 
+response = requests.patch(BASE + "video/2", {"name": "video02new", "likes": 20, "views": 3}) 
+print(response.json())
 
 input()
 
 for i in range (len(data)):
-    response = requests.get(BASE + "video/" + str(i), data[i]) 
-    print(response.json()) 
-    
+    response = requests.get(BASE + "video/" + str(i), data[i]) #http://http://127.0.0.1:5000/video/video_id/data[i]
+    print(response.json())
+ 
