@@ -1,8 +1,23 @@
 from flask import Flask
 from flask_restful import Api, Resource, reqparse, abort
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__) # This line is used to initialize the flask app
 api = Api(app) # This line is used to initialize the flask_restful api
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db' # This line is used to set the database uri. The database is a sqlite database and the name of the database is database.db
+db = SQLAlchemy(app) # This line is used to initialize the flask_sqlalchemy database
+
+class VideoModel(db.Model): # This class is used to create a model to the database. The model is used to create the database tables.
+    id = db.Column(db.Integer, primary_key=True) # This line is used to create a column in the database table. The column is used to store the id of the video. The column is an integer and it is the primary key of the table.
+    name = db.Column(db.String(100), nullable=False) # This line is used to create a column in the database table. The column is used to store the name of the video. The column is a string with 100 characters and it is not nullable.
+    views = db.Column(db.Integer, nullable=False) # This line is used to create a column in the database table. The column is used to store the views of the video. The column is an integer and it is not nullable.
+    likes = db.Column(db.Integer, nullable=False) # This line is used to create a column in the database table. The column is used to store the likes of the video. The column is an integer and it is not nullable.
+
+    def __repr__(self):
+        return f"Video(name = {name}, views = {views}, likes = {likes})"
+        # This line is used to return a string with the name, views and likes of the video. The string will be used to represent the video object.
+    
+# db.create_all() # This line is used to create the database tables. The tables are created using the models created above.
 
 video_put_arguments = reqparse.RequestParser() # This line is used to create a parser to get the data sent to the server and the flask application.
 video_put_arguments.add_argument("name", type=str, help="video_name not founded", required=True)
