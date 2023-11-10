@@ -26,8 +26,9 @@ for video_stats in range (len(data)):
 input()
 
 #Updating a video
-response = requests.patch(BASE + "video/2", {"name": "ELITE", "likes": 31337, "views": 31337}) 
+response = requests.patch(BASE + "video/2", {"name": "ELITE", "views": 31337, "likes": 31337}) 
 print(response.json())
+# You dont need to update all the fields, you can update only one or two fields. Like this: {"name": "ELITE"} that only update the name of the video.
 
 input()
 
