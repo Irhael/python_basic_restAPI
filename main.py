@@ -25,7 +25,7 @@ video_put_arguments.add_argument("views", type=int, help="video_views not founde
 video_put_arguments.add_argument("likes", type=int, help="video_likes not founded", required=True) # required=True means that the argument is required to send the request to the server and the flask application. If the argument is not sent, the request will not be sent and the server will return an error, like "name of the video"
 
 video_update_arguments = reqparse.RequestParser()
-video_update_arguments.add_argument("name", type=str, help="video_name not founded")
+video_update_arguments.add_argument("name", type=str, help="video_name not founded") # required=False is the default value.
 video_update_arguments.add_argument("views", type=int, help="video_views not founded")
 video_update_arguments.add_argument("likes", type=int, help="video_likes not founded")
 
@@ -47,7 +47,7 @@ class Video (Resource): # this class is used to create a resource. It will work 
         return result
     
     @marshal_with(resouce_fields)
-    def put(self, video_id):
+    def post(self, video_id): # post is most commonly used to create a new resource. 
         args = video_put_arguments.parse_args() # This line is used to get the data sent to the server and the flask application.
         result = VideoModel.query.filter_by(id=video_id).first() # This line is used to get the video from the database using video_id.
         if result:

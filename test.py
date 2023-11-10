@@ -13,7 +13,7 @@ data = [{"name": "video00", "likes": 14, "views": 200000},
 #Creating the videos
 
 for video_stats in range (len(data)):
-    response = requests.put(BASE + "video/" + str(video_stats), data[video_stats]) 
+    response = requests.post(BASE + "video/" + str(video_stats), data[video_stats]) 
     print(response.json())
 
 input()
