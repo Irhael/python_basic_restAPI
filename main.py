@@ -63,16 +63,9 @@ class Video (Resource): # this class is used to create a resource. It will work 
         result = VideoModel.query.filter_by(id=video_id).first()
         if not result:
             abort(404, message="video_id not founded and can't be updated")
-            
-        if args["name"]:
-            result.name = args["name"]
-        if args["views"]:
-            result.views = args["views"]
-        if args["likes"]:
-            result.likes = args["likes"]
-        #for arg in args: # This line is used to update the video object with the data sent to the server.
-            #if args[arg]: # verify if the argument is not null.
-                #setattr(result, arg, args[arg]) # setattr is used to change the attribute of the object. The first parameter is the object, the second is the attribute and the third is the new value of the attribute.
+        for arg in args: # This line is used to update the video object with the data sent to the server.
+            if args[arg]: # verify if the argument is not null.
+                setattr(result, arg, args[arg]) # setattr is used to change the attribute of the object. The first parameter is the object, the second is the attribute and the third is the new value of the attribute.
 
         db.session.commit()
         return result
