@@ -8,25 +8,42 @@ data = [{"name": "video00", "likes": 14, "views": 200000},
         {"name": "video01", "likes": 10, "views": 10000000}, 
         {"name": "video02", "likes": 15, "views": 7000000}] 
 
+# Using all the methods of the api
 
-for i in range (len(data)):
-    response = requests.put(BASE + "video/" + str(i), data[i]) #http://http://127.0.0.1:5000/video/video_id/data[i]
+#Creating the videos
+
+for video_stats in range (len(data)):
+    response = requests.put(BASE + "video/" + str(video_stats), data[video_stats]) 
     print(response.json())
 
 input()
 
-for i in range (len(data)):
-    response = requests.get(BASE + "video/" + str(i), data[i]) #http://http://127.0.0.1:5000/video/video_id/data[i]
+#Getting the videos
+for video_stats in range (len(data)):
+    response = requests.get(BASE + "video/" + str(video_stats), data[video_stats]) 
     print(response.json())
- 
+
 input()
 
-response = requests.patch(BASE + "video/2", {"name": "video02new", "likes": 20, "views": 3}) 
+#Updating a video
+response = requests.patch(BASE + "video/2", {"name": "ELITE", "likes": 31337, "views": 31337}) 
 print(response.json())
 
 input()
 
-for i in range (len(data)):
-    response = requests.get(BASE + "video/" + str(i), data[i]) #http://http://127.0.0.1:5000/video/video_id/data[i]
+#Checking if it was updated
+for video_stats in range (len(data)):
+    response = requests.get(BASE + "video/" + str(video_stats), data[video_stats]) 
     print(response.json())
- 
+
+input()
+
+response = requests.delete(BASE + "video/2")
+print(response)
+
+input()
+
+#Checking if it was deleted
+for video_stats in range (len(data)):
+    response = requests.get(BASE + "video/" + str(video_stats), data[video_stats]) 
+    print(response.json())

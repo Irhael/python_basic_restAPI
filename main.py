@@ -24,13 +24,18 @@ video_put_arguments.add_argument("name", type=str, help="video_name not founded"
 video_put_arguments.add_argument("views", type=int, help="video_views not founded", required=True)
 video_put_arguments.add_argument("likes", type=int, help="video_likes not founded", required=True) # required=True means that the argument is required to send the request to the server and the flask application. If the argument is not sent, the request will not be sent and the server will return an error, like "name of the video"
 
+video_update_arguments = reqparse.RequestParser()
+video_update_arguments.add_argument("name", type=str, help="video_name not founded")
+video_update_arguments.add_argument("views", type=int, help="video_views not founded")
+video_update_arguments.add_argument("likes", type=int, help="video_likes not founded")
+
+
 resouce_fields = { # This line is used to create a dictionary with the fields of the video. That are the id, name, views and likes.
     'id': fields.Integer,
     'name': fields.String,
     'views': fields.Integer,
     'likes': fields.Integer
 }
-
 
 class Video (Resource): # this class is used to create a resource. It will work like a route with methods that can be overrided.
 
@@ -54,26 +59,29 @@ class Video (Resource): # this class is used to create a resource. It will work 
     
     @marshal_with(resouce_fields)
     def patch(self, video_id):
-        args = video_put_arguments.parse_args() 
+        args = video_update_arguments.parse_args() 
         result = VideoModel.query.filter_by(id=video_id).first()
         if not result:
-            abort(404, message="video_id not founded")
-        for arg in args: # This line is used to update the video object with the data sent to the server.
-            if args[arg]: # verify if the argument is not null.
-                setattr(result, arg, args[arg]) # setattr is used to change the attribute of the object. The first parameter is the object, the second is the attribute and the third is the new value of the attribute.
-        
+            abort(404, message="video_id not founded and can't be updated")
+            
+        if args["name"]:
+            result.name = args["name"]
+        if args["views"]:
+            result.views = args["views"]
+        if args["likes"]:
+            result.likes = args["likes"]
+        #for arg in args: # This line is used to update the video object with the data sent to the server.
+            #if args[arg]: # verify if the argument is not null.
+                #setattr(result, arg, args[arg]) # setattr is used to change the attribute of the object. The first parameter is the object, the second is the attribute and the third is the new value of the attribute.
+
         db.session.commit()
-
         return result
-
     
     @marshal_with(resouce_fields)
     def delete(self, video_id):
         result = VideoModel.query.filter_by(id=video_id).first() # .first() is used to get the first video with the id video_id
         db.session.delete(result) # This line is used to delete the video from the database.
-        db.session.commit()
-        
-        
+        db.session.commit() 
 
 api.add_resource(Video, "/video/<int:video_id>")
 # This line is used to add the resource created below to the api. The first parameter is the resource class and the second is the route, that will be used to access the resource.
