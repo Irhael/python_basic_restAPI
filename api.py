@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask # flask is a micro web framework written in Python
 from flask_restful import Api, Resource, reqparse, abort, fields, marshal_with
 from flask_sqlalchemy import SQLAlchemy
 
